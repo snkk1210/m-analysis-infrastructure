@@ -12,6 +12,9 @@
 *.direnv
 *.envrc
 
+# zip file
+*.zip
+
 # key file
 *.key
 *.pub
