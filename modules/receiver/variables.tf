@@ -12,3 +12,7 @@ variable "receiver_domain" {
     type = string
     default = ""
 }
+
+variable "reserved_concurrent_executions" {
+  type = number
+}
