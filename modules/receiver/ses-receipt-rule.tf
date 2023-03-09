@@ -14,6 +14,11 @@ resource "aws_ses_receipt_rule" "receiver" {
     position  = 1
     encoding  = "Base64"
   }
+
+  s3_action {
+    bucket_name = aws_s3_bucket.receiver.id
+    position    = 2
+  }
 }
 
 resource "aws_ses_active_receipt_rule_set" "receiver" {
