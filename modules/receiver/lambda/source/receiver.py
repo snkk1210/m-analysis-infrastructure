@@ -11,6 +11,7 @@ logger.setLevel(logging.INFO)
 def lambda_handler(event, context):
 
     logger.info("Event: " + str(event))
+    
     message = json.loads(event['Records'][0]['Sns']['Message'])
     logger.info("Message: " + str(message))
 
@@ -29,6 +30,6 @@ def lambda_handler(event, context):
     subject = message['mail']['commonHeaders']['subject']
     logger.info("Subject: " + str(subject))
 
-    content = message['mail']['content']
+    content = message['content']
     logger.info("Content: " + str(content))
 
