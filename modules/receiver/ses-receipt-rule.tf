@@ -4,7 +4,7 @@ resource "aws_ses_receipt_rule_set" "receiver" {
 
 resource "aws_ses_receipt_rule" "receiver" {
   name          = "${var.project}-${var.environment}-ses-rule"
-  rule_set_name = aws_ses_receipt_rule_set.receiver.rule_set_name
+  rule_set_name = aws_ses_receipt_rule_set.receiver.id
   recipients    = ["${var.receiver_domain}"]
   enabled       = true
   scan_enabled  = true
