@@ -12,7 +12,7 @@ resource "aws_ses_receipt_rule" "receiver" {
   sns_action {
     topic_arn = aws_sns_topic.receiver.arn
     position  = 1
-    encoding  = "Base64"
+    //encoding  = "Base64"
   }
 
   s3_action {
