@@ -19,10 +19,10 @@ data "aws_iam_policy_document" "receiver" {
       ]
     }
     condition {
-      test     = "ArnLike"
+      test     = "StringLike"
       variable = "aws:SourceArn"
       values = [
-        "arn:aws:ses:::*"
+        "arn:aws:ses:*"
       ]
     }
     condition {
@@ -59,7 +59,7 @@ resource "aws_s3_bucket_public_access_block" "receiver" {
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
-  restrict_public_buckets = true
+  restrict_public_buckets = false
 }
 
 // S3 暗号化
