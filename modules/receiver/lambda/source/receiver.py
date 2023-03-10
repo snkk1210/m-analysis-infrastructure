@@ -5,7 +5,6 @@ import email
 import random
 import string
 import os
-import datetime
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -18,7 +17,6 @@ def lambda_handler(event, context):
     mail = message['mail']
 
     logger.info("Message: " + str(message))
-    logger.info("Mail: " + str(mail))
 
     timestamp = message['mail']['timestamp']
     m_from = message['mail']['commonHeaders']['from'][0]
@@ -34,13 +32,6 @@ def lambda_handler(event, context):
 
     res = put2s3(csv, fname)
 
-    # NOTE: Logging
-    logger.info("Timestamp: " + str(timestamp))
-    logger.info("From: " + str(m_from))
-    logger.info("Date: " + str(date))
-    logger.info("Subject: " + str(subject))
-    logger.info("Content: " + str(content))
-    logger.info("Body: " + str(body))
     logger.info("CSV: " + str(csv))
     logger.info("Fname: " + str(fname))
     logger.info("Response: " + str(res))
