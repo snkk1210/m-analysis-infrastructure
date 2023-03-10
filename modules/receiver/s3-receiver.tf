@@ -36,6 +36,10 @@ data "aws_iam_policy_document" "receiver" {
 
 }
 
+/** 
+# NOTE: S3-receiver
+*/
+
 // S3
 resource "aws_s3_bucket" "receiver" {
   bucket = "${var.project}-${var.environment}-receiver-bucket"

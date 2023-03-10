@@ -17,14 +17,11 @@ resource "aws_lambda_function" "receiver" {
   reserved_concurrent_executions = var.reserved_concurrent_executions
   runtime                        = "python3.9"
 
-  /**
   environment {
     variables = {
-      channelName         = var.channel_name
-      kmsEncryptedHookUrl = var.kms_encrypted_hookurl
+      s3BucketName         = aws_s3_bucket.processed.id
     }
   }
-  */
 
   lifecycle {
     ignore_changes = [
