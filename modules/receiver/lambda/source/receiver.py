@@ -2,6 +2,7 @@ import boto3
 import json
 import logging
 import email
+import re
 import os
 import datetime
 
@@ -18,11 +19,11 @@ def lambda_handler(event, context):
     timestamp = message['mail']['timestamp']
     m_from = message['mail']['commonHeaders']['from']
     date = message['mail']['commonHeaders']['date']
-    subject = message['mail']['commonHeaders']['subject']
+    subject = message['mail']['commonHeaders']['subject'].replace(",","@")
     content = message['content']
 
     email_obj = email.message_from_string(content)
-    body = perth_mail_body(email_obj)
+    body = perth_mail_body(email_obj).replace(",","@")
 
     # NOTE: Logging
     logger.info("Message: " + str(message))
