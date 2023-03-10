@@ -62,6 +62,7 @@ def lambda_handler(event, context):
         logger.info("There is Attach File")
         body += "Error: Attachments are not supported"
 
+    logger.info("AttachData: " + str(attach_data))
     logger.info("Text: " + str(body_text))
     logger.info("HTML: " + str(body_html))
     logger.info("Body: " + str(body))
