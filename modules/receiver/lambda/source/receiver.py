@@ -17,7 +17,8 @@ def lambda_handler(event, context):
     mail = message['mail']
 
     timestamp = message['mail']['timestamp']
-    m_from = message['mail']['commonHeaders']['from'].replace("[\"","").replace("\"]","")
+    m_from = message['mail']['commonHeaders']['from'].replace("[\"","")
+    #m_from = message['mail']['commonHeaders']['from'].replace("\"]","")
     date = message['mail']['commonHeaders']['date']
     subject = message['mail']['commonHeaders']['subject'].replace(",","@")
     content = message['content']
