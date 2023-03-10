@@ -68,14 +68,11 @@ resource "aws_iam_role_policy_attachment" "lambda_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-/**
-# NOTE: 利用しない
-// CloudWatch ReadOnly ポリシー アタッチ
-resource "aws_iam_role_policy_attachment" "lambda_to_cw" {
+// S3 アクセス ポリシー アタッチ
+resource "aws_iam_role_policy_attachment" "lambda_to_s3" {
   role       = aws_iam_role.lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
-*/
 
 // SSM パラメータ 読み込み ポリシー
 resource "aws_iam_policy" "lambda_to_ssm" {

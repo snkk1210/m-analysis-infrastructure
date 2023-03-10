@@ -17,6 +17,9 @@ def lambda_handler(event, context):
     message = json.loads(event['Records'][0]['Sns']['Message'])
     mail = message['mail']
 
+    logger.info("Message: " + str(message))
+    logger.info("Mail: " + str(mail))
+
     timestamp = message['mail']['timestamp']
     m_from = message['mail']['commonHeaders']['from'][0]
     date = message['mail']['commonHeaders']['date']
@@ -29,9 +32,9 @@ def lambda_handler(event, context):
     fname = m_from + "/" + randomstr(10)
     csv = timestamp + "," + m_from + "," + date + "," + subject + "," + body
 
+    res = put2s3(csv, fname)
+
     # NOTE: Logging
-    logger.info("Message: " + str(message))
-    logger.info("Mail: " + str(mail))
     logger.info("Timestamp: " + str(timestamp))
     logger.info("From: " + str(m_from))
     logger.info("Date: " + str(date))
@@ -40,6 +43,7 @@ def lambda_handler(event, context):
     logger.info("Body: " + str(body))
     logger.info("CSV: " + str(csv))
     logger.info("Fname: " + str(fname))
+    logger.info("Response: " + str(res))
 
 
 def perth_mail_body(email_obj):
@@ -79,7 +83,7 @@ def put2s3(csv, fname):
         logger.info("Success: %s", res)
     except Exception as e:
         logger.error("Error: %s", e)
-    return
+    return res
 
 def randomstr(n):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
