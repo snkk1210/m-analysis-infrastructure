@@ -27,7 +27,7 @@ def lambda_handler(event, context):
     email_obj = email.message_from_string(content)
     body = perth_mail_body(email_obj).replace(",","@")
 
-    fname = m_from + "/" + randomstr(10)
+    fname = m_from + "/" + randomstr(20)
     csv = timestamp + "," + m_from + "," + date + "," + subject + "," + body
 
     res = put2s3(csv, fname)
