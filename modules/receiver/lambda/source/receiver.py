@@ -1,12 +1,12 @@
 import boto3
 import json
 import logging
+import email
 import os
 import datetime
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
 
 def lambda_handler(event, context):
 
@@ -33,3 +33,35 @@ def lambda_handler(event, context):
     content = message['content']
     logger.info("Content: " + str(content))
 
+
+    email_obj = email.message_from_string(content)
+
+    body = ""
+    body_html = ""
+    body_text = ""
+    for part in email_obj.walk():
+        logger.info("maintype: " + part.get_content_maintype())
+        if part.get_content_maintype() == 'multipart':
+            continue
+
+        attach_fname = part.get_filename()
+
+    if not attach_fname:
+        charset = str(part.get_content_charset())
+        if charset:
+            body += part.get_payload(decode=True).decode(charset, errors="replace")
+        else:
+            body += part.get_payload(decode=True)
+
+        if part.get_content_type() == "text/html":
+            body_html += body
+        elif part.get_content_type() == "text/plain":
+            body_text += body
+    else:
+        attach_data = part.get_payload(decode=True)
+        logger.info("There is Attach File")
+        body += "Error: Attachments are not supported"
+
+    logger.info("Text: " + str(body_text))
+    logger.info("HTML: " + str(body_html))
+    logger.info("Body: " + str(body))
