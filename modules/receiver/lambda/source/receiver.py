@@ -70,10 +70,11 @@ def perth_mail_body(email_obj):
 
 def put2s3(csv, fname):
 
-    s3 = boto3.client("s3", region_name=os.environ['s3BucketName'])
+    s3 = boto3.client("s3")
 
     try:
         res = s3.put_object(
+            Bucket=os.environ['s3BucketName'],
             ACL='private',
             Body=csv,
             Key=fname,
