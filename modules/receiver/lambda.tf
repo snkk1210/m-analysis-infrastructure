@@ -19,13 +19,13 @@ resource "aws_lambda_function" "receiver" {
 
   environment {
     variables = {
-      s3BucketName         = aws_s3_bucket.processed.id
+      s3BucketName = aws_s3_bucket.processed.id
     }
   }
 
   lifecycle {
     ignore_changes = [
-      environment
+      //environment
     ]
   }
 
