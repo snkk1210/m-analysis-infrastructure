@@ -2,7 +2,8 @@ import boto3
 import json
 import logging
 import email
-import re
+import random
+import string
 import os
 import datetime
 
@@ -25,6 +26,7 @@ def lambda_handler(event, context):
     email_obj = email.message_from_string(content)
     body = perth_mail_body(email_obj).replace(",","@")
 
+    fname = m_from + "/" + randomstr(10)
     csv = timestamp + "," + m_from + "," + date + "," + subject + "," + body
 
     # NOTE: Logging
@@ -37,6 +39,7 @@ def lambda_handler(event, context):
     logger.info("Content: " + str(content))
     logger.info("Body: " + str(body))
     logger.info("CSV: " + str(csv))
+    logger.info("Fname: " + str(fname))
 
 
 def perth_mail_body(email_obj):
@@ -77,3 +80,6 @@ def put2s3(csv, fname):
     except Exception as e:
         logger.error("Error: %s", e)
     return
+
+def randomstr(n):
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
