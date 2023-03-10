@@ -17,13 +17,15 @@ def lambda_handler(event, context):
     mail = message['mail']
 
     timestamp = message['mail']['timestamp']
-    m_from = message['mail']['commonHeaders']['from']
+    m_from = message['mail']['commonHeaders']['from'].replace("[\"","").replace("\"]","")
     date = message['mail']['commonHeaders']['date']
     subject = message['mail']['commonHeaders']['subject'].replace(",","@")
     content = message['content']
 
     email_obj = email.message_from_string(content)
     body = perth_mail_body(email_obj).replace(",","@")
+
+    csv = timestamp + "," + m_from + "," + date + "," + subject + "," + body
 
     # NOTE: Logging
     logger.info("Message: " + str(message))
@@ -34,6 +36,7 @@ def lambda_handler(event, context):
     logger.info("Subject: " + str(subject))
     logger.info("Content: " + str(content))
     logger.info("Body: " + str(body))
+    logger.info("CSV: " + str(csv))
 
 
 def perth_mail_body(email_obj):
@@ -57,3 +60,20 @@ def perth_mail_body(email_obj):
         body += "Error: Attachments are not supported -> " + str(part.get_payload(decode=True))
 
     return body
+
+def put2s3(csv, fname):
+
+    s3 = boto3.client("s3", region_name=os.environ['s3BucketName'])
+
+    try:
+        res = s3.put_object(
+            ACL='private',
+            Body=csv,
+            Key=fname,
+            ContentType='text/plain'
+            )
+        logger.info("Success: %s CSV has been written.", fname)
+        logger.info("Success: %s", res)
+    except Exception as e:
+        logger.error("Error: %s", e)
+    return
