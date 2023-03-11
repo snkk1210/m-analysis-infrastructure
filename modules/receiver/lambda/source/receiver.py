@@ -21,11 +21,11 @@ def lambda_handler(event, context):
     timestamp = message['mail']['timestamp']
     m_from = message['mail']['commonHeaders']['from'][0]
     date = message['mail']['commonHeaders']['date']
-    subject = message['mail']['commonHeaders']['subject'].replace(",","@")
+    subject = message['mail']['commonHeaders']['subject'].replace(",","[comma]")
     content = message['content']
 
     email_obj = email.message_from_string(content)
-    body = perth_mail_body(email_obj).replace(",","@")
+    body = perth_mail_body(email_obj).replace(",","[comma]")
 
     fname = m_from + "/" + randomstr(20)
     csv = timestamp + "," + m_from + "," + date + "," + subject + "," + body
