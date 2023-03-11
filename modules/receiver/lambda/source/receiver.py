@@ -36,7 +36,6 @@ def lambda_handler(event, context):
     logger.info("Fname: " + str(fname))
     logger.info("Response: " + str(res))
 
-
 def perth_mail_body(email_obj):
 
     body = ""
