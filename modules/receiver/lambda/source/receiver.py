@@ -22,13 +22,13 @@ def lambda_handler(event, context):
     timestamp = message['mail']['timestamp']
     m_from = message['mail']['commonHeaders']['from'][0]
     date = message['mail']['commonHeaders']['date']
-    subject = message['mail']['commonHeaders']['subject'].replace(",","[comma]")
+    subject = message['mail']['commonHeaders']['subject'].replace("/","[slash]")
     content = message['content']
 
     email_obj = email.message_from_string(content)
-    body = perth_mail_body(email_obj).replace(",","[comma]")
+    body = perth_mail_body(email_obj)
 
-    fname = extract_mail_address(m_from) + "/" + subject + "/" + randomstr(20)
+    fname = extract_mail_address(m_from) + "/" + subject + "/" + randomstr(20) + ".txt"
 
     res = put2s3(body, fname)
 
