@@ -15,27 +15,37 @@ def lambda_handler(event, context):
     logger.info("Event: " + str(event))
     
     message = json.loads(event['Records'][0]['Sns']['Message'])
-
     m_from = message['mail']['commonHeaders']['from'][0]
     date = message['mail']['commonHeaders']['date']
     subject = message['mail']['commonHeaders']['subject']
     content = message['content']
-
     email_obj = email.message_from_string(content)
+
     body = perth_mail_body(email_obj)
+    logger.info("Body: " + str(body))
 
     fname = extract_mail_address(m_from).replace("/","[slash]") + "/" \
         + subject.replace("/","[slash]") \
         + "/" + date.replace("/","[slash]") \
         + "/" + randomstr(20) + ".txt"
+    logger.info("Fname: " + str(fname))
 
     res = put2s3(body, fname)
-
-    logger.info("Body: " + str(body))
-    logger.info("Fname: " + str(fname))
     logger.info("Response: " + str(res))
 
 def perth_mail_body(email_obj):
+    """
+    Retrieve the body part of the mail.
+
+    Parameters
+    ----------
+    email_obj : object structure
+
+    Returns
+    -------
+    body : string
+        body part of the mail
+    """
 
     body = ""
     for part in email_obj.walk():
@@ -58,6 +68,21 @@ def perth_mail_body(email_obj):
     return body
 
 def put2s3(body, fname):
+    """
+    Upload files to S3.
+
+    Parameters
+    ----------
+    body : string
+        File Contents
+    fname : string
+        File Name ( Path )
+
+    Returns
+    -------
+    res : string
+        API Return Values
+    """
 
     s3 = boto3.client("s3")
 
@@ -76,8 +101,34 @@ def put2s3(body, fname):
     return res
 
 def randomstr(n):
+    """
+    Generate a random string.
+
+    Parameters
+    ----------
+    n : int
+        length of a character string
+    
+    Returns
+    -------
+        : string
+        random string
+    """
     return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
 
 def extract_mail_address(m_from):
+    """
+    Extracting email addresses from a string.
+
+    Parameters
+    ----------
+    m_from : string
+        String containing an email address
+    
+    Returns
+    -------
+        : list
+        email addresses 
+    """
     pattern = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
     return re.findall(pattern, m_from)[0]
