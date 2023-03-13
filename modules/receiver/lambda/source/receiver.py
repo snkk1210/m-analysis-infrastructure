@@ -80,7 +80,7 @@ def put2s3(body, fname):
 
     Returns
     -------
-    res : string
+    res : dict
         API Return Values
     """
 
