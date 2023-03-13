@@ -15,11 +15,8 @@ def lambda_handler(event, context):
     logger.info("Event: " + str(event))
     
     message = json.loads(event['Records'][0]['Sns']['Message'])
-    mail = message['mail']
-
     logger.info("Message: " + str(message))
 
-    timestamp = message['mail']['timestamp']
     m_from = message['mail']['commonHeaders']['from'][0]
     date = message['mail']['commonHeaders']['date']
     subject = message['mail']['commonHeaders']['subject']
@@ -28,7 +25,7 @@ def lambda_handler(event, context):
     email_obj = email.message_from_string(content)
     body = perth_mail_body(email_obj)
 
-    fname = extract_mail_address(m_from).replace("/","[slash]") + "/" + subject.replace("/","[slash]") + "/" + randomstr(20) + ".txt"
+    fname = extract_mail_address(m_from).replace("/","[slash]") + "/" + subject.replace("/","[slash]") + "/" + date.replace("/","[slash]") + "/" + randomstr(20) + ".txt"
 
     res = put2s3(body, fname)
 
