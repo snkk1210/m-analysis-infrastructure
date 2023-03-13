@@ -5,6 +5,7 @@ import email
 import random
 import string
 import os
+import re
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -27,7 +28,7 @@ def lambda_handler(event, context):
     email_obj = email.message_from_string(content)
     body = perth_mail_body(email_obj).replace(",","[comma]")
 
-    fname = m_from + "/" + subject + "/" + randomstr(20)
+    fname = extract_mail_address(m_from) + "/" + subject + "/" + randomstr(20)
 
     res = put2s3(body, fname)
 
@@ -77,3 +78,7 @@ def put2s3(body, fname):
 
 def randomstr(n):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
+
+def extract_mail_address(m_from):
+    pattern = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
+    return re.findall(pattern, m_from)[0]
