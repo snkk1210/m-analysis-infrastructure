@@ -27,12 +27,11 @@ def lambda_handler(event, context):
     email_obj = email.message_from_string(content)
     body = perth_mail_body(email_obj).replace(",","[comma]")
 
-    fname = m_from + "/" + randomstr(20)
-    csv = timestamp + "," + m_from + "," + date + "," + subject + "," + body
+    fname = m_from + "/" + subject + "/" + randomstr(20)
 
-    res = put2s3(csv, fname)
+    res = put2s3(body, fname)
 
-    logger.info("CSV: " + str(csv))
+    logger.info("Body: " + str(body))
     logger.info("Fname: " + str(fname))
     logger.info("Response: " + str(res))
 
@@ -58,7 +57,7 @@ def perth_mail_body(email_obj):
 
     return body
 
-def put2s3(csv, fname):
+def put2s3(body, fname):
 
     s3 = boto3.client("s3")
 
@@ -66,11 +65,11 @@ def put2s3(csv, fname):
         res = s3.put_object(
             Bucket=os.environ['s3BucketName'],
             ACL='private',
-            Body=csv,
+            Body=body,
             Key=fname,
             ContentType='text/plain'
             )
-        logger.info("Success: %s CSV has been written.", fname)
+        logger.info("Success: %s has been written.", fname)
         logger.info("Success: %s", res)
     except Exception as e:
         logger.error("Error: %s", e)
