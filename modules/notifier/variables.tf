@@ -1,3 +1,13 @@
+variable "project" {
+  type    = string
+  default = ""
+}
+
+variable "environment" {
+  type    = string
+  default = ""
+}
+
 variable "notifier_groups" {
   type = list(object({
     name        = string
