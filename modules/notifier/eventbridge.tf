@@ -32,8 +32,9 @@ resource "aws_cloudwatch_event_target" "notifier" {
 
 resource "aws_lambda_permission" "notifier" {
   for_each = { for notifier_group in var.notifier_groups : notifier_group.name => notifier_group }
-  
+
   action        = "lambda:InvokeFunction"
   function_name = each.value.lambda_function_name
   principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.notifier[each.value.name].arn
 }
