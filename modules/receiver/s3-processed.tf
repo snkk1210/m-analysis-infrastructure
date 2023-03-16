@@ -35,6 +35,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "processed" {
 
 // EventBridge 通知
 resource "aws_s3_bucket_notification" "processed" {
-  bucket = aws_s3_bucket.processed.id
+  bucket      = aws_s3_bucket.processed.id
   eventbridge = true
 }
