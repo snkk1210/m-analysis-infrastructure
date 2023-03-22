@@ -64,7 +64,28 @@ def read_s3_object(bucket_name, object_key):
     return body
 
 def notify2slack(m_from, subject, date, content, object_key):
-    
+    """
+    Notify messages to slack.
+
+    Parameters
+    ----------
+    m_from : string
+        Mail From
+    subject : string
+        Mail Subject
+    date : string
+        Mail Date
+    content : string
+        Mail Content
+    object_key : string
+        File Name ( Path )
+        
+    Returns
+    -------
+    res : dict
+        API Return Values
+    """
+
     slack_message = {
         "channel": os.environ['channelName'],
         "icon_emoji": ":rotating_light:",
