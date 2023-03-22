@@ -132,3 +132,15 @@ def extract_mail_address(m_from):
     """
     pattern = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
     return re.findall(pattern, m_from)[0]
+
+def extract_display_name(m_from):
+    """
+
+    """
+    delimiter = ' <'
+
+    if delimiter in m_from:
+        idx = m_from.find(delimiter)
+        return m_from[:idx]
+    else:
+        return "no_display_name"
