@@ -27,7 +27,7 @@ def lambda_handler(event, context):
     fname = extract_mail_address(m_from).replace("/","[slash]") + "/" \
         + subject.replace("/","[slash]") \
         + "/" + date.replace("/","[slash]") \
-        + "/" + randomstr(20) + ".txt"
+        + "/" + extract_display_name(m_from) + "[dn]" + randomstr(20) + ".txt"
     logger.info("Fname: " + str(fname))
 
     res = put2s3(body, fname)
@@ -134,13 +134,25 @@ def extract_mail_address(m_from):
     return re.findall(pattern, m_from)[0]
 
 def extract_display_name(m_from):
-    """
+    """    
+    Extracting display name from a Mail From.
 
+    Parameters
+    ----------
+    m_from : string
+        String containing an email address
+    
+    Returns
+    -------
+        : string
+        display name
     """
     delimiter = ' <'
 
     if delimiter in m_from:
         idx = m_from.find(delimiter)
+        logger.info("There is Display Name")
         return m_from[:idx]
     else:
+        logger.info("There is no Display Name")
         return "no_display_name"
