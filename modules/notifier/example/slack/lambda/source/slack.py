@@ -4,6 +4,7 @@ import logging
 import os
 import re
 
+from base64 import b64decode
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 from urllib.parse import quote
@@ -121,7 +122,7 @@ def notify2slack(m_from, subject, date, content, object_key):
         ]
     }
 
-    req = Request(os.environ['HookUrl'], json.dumps(slack_message).encode('utf-8'))
+    req = Request(decrypt_hookurl(os.environ['HookUrl']), json.dumps(slack_message).encode('utf-8'))
 
     try:
         res = urlopen(req)
@@ -132,3 +133,33 @@ def notify2slack(m_from, subject, date, content, object_key):
     except URLError as e:
         logger.error("Server connection failed: %s", e.reason)
     return res
+
+
+def decrypt_hookurl(hookurl):
+    """
+    Notify messages to slack.
+
+    Parameters
+    ----------
+    hookurl : string
+        WebhookURL that may be encrypted
+        
+    Returns
+    -------
+    hookurl : string
+        WebhookURL
+
+    decrypted_hookurl : string
+        Decrypted WebhookURL
+    """
+
+    if  "hooks.slack.com" in hookurl:
+        logger.info("kmsEncryptedHookUrl is not Encrypted")
+        return hookurl
+    else:
+        logger.info("kmsEncryptedHookUrl is Encrypted")
+        decrypted_hookurl = boto3.client('kms').decrypt(
+            CiphertextBlob=b64decode(hookurl),
+            EncryptionContext={'LambdaFunctionName': os.environ['AWS_LAMBDA_FUNCTION_NAME']}
+        )['Plaintext'].decode('utf-8')
+        return decrypted_hookurl
