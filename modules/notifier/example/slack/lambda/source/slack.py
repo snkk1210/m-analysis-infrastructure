@@ -72,7 +72,7 @@ def notify2slack(m_from, subject, date, content, object_key):
             {
                 "color": "#FF0000",
                 "title": "Your email has been received.",
-                "text": "<!here> \n *Resources* : %s \n" % (content),
+                "text": "<!here> \n *Content* \n ```%s``` \n" % (content),
                 "fields": [
                     {
                         "title": "Date",
