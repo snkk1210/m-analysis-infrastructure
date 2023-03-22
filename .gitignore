@@ -23,6 +23,9 @@
 backend.tf
 provider.tf
 terraform.tfvars
+notifier.tf
+receiver.tf
+example-slack-lambda.tf
 
 # Lock File
 .terraform.lock.hcl

@@ -1,0 +1,35 @@
+module "notifier" {
+  source = "./modules/notifier"
+
+  project     = var.project
+  environment = var.environment
+
+  notifier_groups = [
+    {
+      // Unique identifier
+      name = "xxxx"
+      // Triggering buckets
+      bucket_name = "xxxx"
+      // Triggering first renovation folder
+      prefix = "xxxx"
+      // Lambda Arn
+      lambda_arn = "xxxx"
+      // Lambda Function name
+      lambda_function_name = "xxxx"
+    },
+    {
+      name                 = "xxxx"
+      bucket_name          = "xxxx"
+      prefix               = "xxxx"
+      lambda_arn           = "xxxx"
+      lambda_function_name = "xxxx"
+    },
+    {
+      name                 = "xxxx"
+      bucket_name          = "xxxx"
+      prefix               = "xxxx"
+      lambda_arn           = "xxxx"
+      lambda_function_name = "xxxx"
+    }
+  ]
+}

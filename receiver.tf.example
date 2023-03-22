@@ -1,0 +1,14 @@
+module "receiver" {
+  source = "./modules/receiver"
+
+  project     = var.project
+  environment = var.environment
+
+  // Domain used to receive email.
+  receiver_domain = "xxx.xxx"
+
+  // Lambda Enable
+  reserved_concurrent_executions = -1
+  // Lambda Disable
+  //reserved_concurrent_executions = 0
+}

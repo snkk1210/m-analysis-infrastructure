@@ -1,0 +1,18 @@
+module "example_slack_lambda" {
+  source = "./modules/notifier/example/slack"
+
+  project     = var.project
+  environment = var.environment
+
+  // Lambda Enable
+  reserved_concurrent_executions = -1
+
+  // Lambda Disable
+  //reserved_concurrent_executions = 0
+
+  // Slack Webhool URL
+  hookurl = "https://hooks.slack.com/services/xxx"
+
+  // Channel Name
+  channel_name = "#xxx"
+}
