@@ -1,19 +1,19 @@
 // AWS アカウント Region 参照
 data "aws_region" "self" {}
 
-data "archive_file" "example" {
+data "archive_file" "basic" {
   type        = "zip"
-  source_file = "${path.module}/lambda/source/example.py"
-  output_path = "${path.module}/lambda/bin/example.zip"
+  source_file = "${path.module}/lambda/source/basic.py"
+  output_path = "${path.module}/lambda/bin/basic.zip"
 }
 
-resource "aws_lambda_function" "example" {
-  filename                       = data.archive_file.example.output_path
-  function_name                  = "${var.project}-${var.environment}-example-notifier-function"
-  description                    = "${var.project}-${var.environment}-example-notifier-function"
+resource "aws_lambda_function" "basic" {
+  filename                       = data.archive_file.basic.output_path
+  function_name                  = "${var.project}-${var.environment}-example-basic-function"
+  description                    = "${var.project}-${var.environment}-example-basic-function"
   role                           = aws_iam_role.lambda_role.arn
-  handler                        = "example.lambda_handler"
-  source_code_hash               = data.archive_file.example.output_base64sha256
+  handler                        = "basic.lambda_handler"
+  source_code_hash               = data.archive_file.basic.output_base64sha256
   reserved_concurrent_executions = var.reserved_concurrent_executions
   runtime                        = "python3.9"
 
@@ -32,12 +32,12 @@ resource "aws_lambda_function" "example" {
 }
 
 /**
-# NOTE: IAM Role For example Alarm Lambda
+# NOTE: IAM Role For basic Lambda
 */
 
 // Lambda role
 resource "aws_iam_role" "lambda_role" {
-  name               = "${var.project}-${var.environment}-${data.aws_region.self.name}-example-notifier-lambda-role"
+  name               = "${var.project}-${var.environment}-${data.aws_region.self.name}-example-basic-lambda-role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -68,7 +68,7 @@ resource "aws_iam_role_policy_attachment" "lambda_to_s3" {
 
 // SSM パラメータ 読み込み ポリシー
 resource "aws_iam_policy" "lambda_to_ssm" {
-  name = "${var.project}-${var.environment}-${data.aws_region.self.name}-example-notifier-lambda-policy"
+  name = "${var.project}-${var.environment}-${data.aws_region.self.name}-example-basic-lambda-policy"
   path = "/"
 
   policy = <<EOF
@@ -97,16 +97,16 @@ resource "aws_iam_role_policy_attachment" "lambda_to_ssm" {
 
 /**
 // 環境変数暗号化 KMS
-resource "aws_kms_key" "example_lambda" {
-  description             = "${var.project}-${var.environment}-example-notifier-lambda-kms"
+resource "aws_kms_key" "basic_lambda" {
+  description             = "${var.project}-${var.environment}-example-basic-lambda-kms"
   deletion_window_in_days = 30
   enable_key_rotation     = true
   is_enabled              = true
 }
 
 // 環境変数暗号化 KMS Alias
-resource "aws_kms_alias" "example_lambda" {
-  name          = "alias/${var.project}/${var.environment}/example_notifier_lambda_kms_key"
-  target_key_id = aws_kms_key.example_lambda.id
+resource "aws_kms_alias" "basic_lambda" {
+  name          = "alias/${var.project}/${var.environment}/example_basic_lambda_kms_key"
+  target_key_id = aws_kms_key.basic_lambda.id
 }
 */
