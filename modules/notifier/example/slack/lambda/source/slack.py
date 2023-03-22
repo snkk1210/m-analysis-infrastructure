@@ -93,7 +93,7 @@ def notify2slack(m_from, subject, date, content, object_key):
         "attachments": [
             {
                 "color": "#FF0000",
-                "title": "Your email has been received.",
+                "title": "Email has been received.",
                 "text": "<!here> \n *Content* \n ```%s``` \n" % (content),
                 "fields": [
                     {
@@ -154,10 +154,10 @@ def decrypt_hookurl(hookurl):
     """
 
     if  "hooks.slack.com" in hookurl:
-        logger.info("This is not Encrypted")
+        logger.info("HookURL is not Encrypted")
         return hookurl
     else:
-        logger.info("This is Encrypted")
+        logger.info("HookURL is Encrypted")
         decrypted_hookurl = boto3.client('kms').decrypt(
             CiphertextBlob=b64decode(hookurl),
             EncryptionContext={'LambdaFunctionName': os.environ['AWS_LAMBDA_FUNCTION_NAME']}

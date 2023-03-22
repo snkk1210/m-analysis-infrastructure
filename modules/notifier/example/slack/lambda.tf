@@ -27,7 +27,7 @@ resource "aws_lambda_function" "slack" {
 
   lifecycle {
     ignore_changes = [
-      //environment
+      environment
     ]
   }
 
