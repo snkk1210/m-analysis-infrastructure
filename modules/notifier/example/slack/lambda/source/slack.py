@@ -131,5 +131,4 @@ def notify2slack(m_from, subject, date, content, object_key):
         logger.error("Request failed: %d %s", e.code, e.reason)
     except URLError as e:
         logger.error("Server connection failed: %s", e.reason)
-
     return res
