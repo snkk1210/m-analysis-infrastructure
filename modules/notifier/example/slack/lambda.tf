@@ -97,7 +97,6 @@ resource "aws_iam_role_policy_attachment" "lambda_to_ssm" {
   policy_arn = aws_iam_policy.lambda_to_ssm.arn
 }
 
-/**
 // 環境変数暗号化 KMS
 resource "aws_kms_key" "slack_lambda" {
   description             = "${var.project}-${var.environment}-example-slack-lambda-kms"
@@ -111,4 +110,3 @@ resource "aws_kms_alias" "slack_lambda" {
   name          = "alias/${var.project}/${var.environment}/example_slack_lambda_kms_key"
   target_key_id = aws_kms_key.slack_lambda.id
 }
-*/

@@ -154,10 +154,10 @@ def decrypt_hookurl(hookurl):
     """
 
     if  "hooks.slack.com" in hookurl:
-        logger.info("kmsEncryptedHookUrl is not Encrypted")
+        logger.info("This is not Encrypted")
         return hookurl
     else:
-        logger.info("kmsEncryptedHookUrl is Encrypted")
+        logger.info("This is Encrypted")
         decrypted_hookurl = boto3.client('kms').decrypt(
             CiphertextBlob=b64decode(hookurl),
             EncryptionContext={'LambdaFunctionName': os.environ['AWS_LAMBDA_FUNCTION_NAME']}
