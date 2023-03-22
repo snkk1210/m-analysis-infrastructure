@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     m_from = object_list[0]
     subject = object_list[1]
     date = object_list[2]
-    content = get_from_s3(bucket_name, object_key)
+    content = read_s3_object(bucket_name, object_key)
 
     logging.info('From: ' + str(m_from))
     logging.info('Subject: ' + str(subject))
@@ -33,9 +33,9 @@ def lambda_handler(event, context):
     logging.info('Content: ' + str(content))
 
 
-def get_from_s3(bucket_name, object_key):
+def read_s3_object(bucket_name, object_key):
     """
-    Upload files to S3.
+    Read files From S3.
 
     Parameters
     ----------
