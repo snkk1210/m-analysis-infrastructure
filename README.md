@@ -8,7 +8,7 @@ SES receipt rule で受信したメールを加工して S3 に格納し、
 
 ## Diagram
 
-準備中…
+![poc02 5 drawio](https://user-images.githubusercontent.com/46625712/227524033-6665fcc7-5766-447c-8d13-6c0a641872b6.png)
 
 ## 何に使うの？
 
