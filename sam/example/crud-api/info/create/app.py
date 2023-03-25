@@ -11,7 +11,6 @@ def lambda_handler(event, context):
       "Access-Control-Allow-Origin": "*"
     }
 
-    print(event['body'])
     req = json.loads(event['body'])
 
     item = {
@@ -31,5 +30,8 @@ def lambda_handler(event, context):
     }
 
 def _get_database():
-    endpoint = boto3.resource('dynamodb', endpoint_url=os.environ["DYNAMO_ENDPOINT"])
+    if (os.environ["DYNAMO_ENDPOINT"] == ""):
+        endpoint = boto3.resource('dynamodb')
+    else:
+        endpoint = boto3.resource('dynamodb', endpoint_url=os.environ["DYNAMO_ENDPOINT"])
     return endpoint
