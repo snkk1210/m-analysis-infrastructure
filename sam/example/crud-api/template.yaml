@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  crud-api
+
+  Sample SAM Template for crud-api
+
+Globals:
+  Function:
+    Timeout: 3
+    Environment:
+      Variables:
+        DYNAMO_ENDPOINT: DYNAMO_ENDPOINT
+        TABLE: TABLE
+  Api:
+    Cors:
+      AllowMethods: "'OPTIONS,GET,POST'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+
+Resources:
+  CreateInfoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: info/create
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Events:
+        CreateInfoF:
+          Type: Api
+          Properties:
+            Path: /info
+            Method: post
+            
+  #ReadInfoFunction:
+  #  Type: AWS::Serverless::Function
+  #  Properties:
+  #    CodeUri: info/read
+  #    Handler: app.lambda_handler
+  #    Runtime: python3.9
+  #    Architectures:
+  #      - x86_64
+  #    Events:
+  #      ReadInfo:
+  #        Type: Api
+  #        Properties:
+  #          Path: /info
+  #          Method: get
