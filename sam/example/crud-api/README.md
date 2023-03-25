@@ -1,12 +1,21 @@
 # crud-api
 
-## Example ENV
+## Example ENV ( vars.json )
 
-- vars.json
+- dynamodb-local
 ```
 {
     "Parameters": {
       "DYNAMO_ENDPOINT": "http://xxx.xxx.xxx.xxx:8000",
+      "TABLE": "info"
+    }
+}
+```
+ - Dynamodb
+```
+{
+    "Parameters": {
+      "DYNAMO_ENDPOINT": "",
       "TABLE": "info"
     }
 }
