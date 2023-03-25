@@ -34,17 +34,17 @@ Resources:
             Path: /info
             Method: post
             
-  #ReadInfoFunction:
-  #  Type: AWS::Serverless::Function
-  #  Properties:
-  #    CodeUri: info/read
-  #    Handler: app.lambda_handler
-  #    Runtime: python3.9
-  #    Architectures:
-  #      - x86_64
-  #    Events:
-  #      ReadInfo:
-  #        Type: Api
-  #        Properties:
-  #          Path: /info
-  #          Method: get
+  ReadInfoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: info/read
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Events:
+        ReadInfo:
+          Type: Api
+          Properties:
+            Path: /info
+            Method: get
