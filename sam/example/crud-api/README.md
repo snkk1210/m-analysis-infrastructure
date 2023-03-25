@@ -38,6 +38,14 @@ sam build
 sam local start-api --env-vars vars.json --host 0.0.0.0
 ```
 
+## Example requests
+
+- Create
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"key" : "test-key" , "attr1" : "test-attr1" , "attr2" : "test-attr2"}' http://127.0.0.1:3000/info
+```
+
+- Read
+```
+curl http://127.0.0.1:3000/info
 ```
