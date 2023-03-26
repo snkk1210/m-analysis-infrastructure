@@ -1,9 +1,15 @@
 import json
 import boto3
 import os
+import logging
 from boto3.dynamodb.conditions import Key, Attr
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 def lambda_handler(event, context):
+
+    logger.info("Event: " + str(event))
 
     responseHeaders = {
       "Access-Control-Allow-Methods": "OPTIONS,GET",
@@ -17,10 +23,14 @@ def lambda_handler(event, context):
         'key': req['key']
     }
 
+    logger.info("Item: " + str(item))
+
     table = _get_database().Table(os.environ['TABLE'])
 
     res = table.delete_item(Key=item, ReturnValues='ALL_OLD')
 
+    logger.info("Respons: " + str(res))
+    
     return {
         "headers": responseHeaders,
         "statusCode": 200,

@@ -1,8 +1,14 @@
 import json
 import boto3
 import os
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
+
+    logger.info("Event: " + str(event))
 
     responseHeaders = {
       "Access-Control-Allow-Methods": "OPTIONS,GET",

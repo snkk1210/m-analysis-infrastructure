@@ -1,10 +1,16 @@
 import json
 import boto3
 import os
+import logging
 import datetime
 from boto3.dynamodb.conditions import Key, Attr
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 def lambda_handler(event, context):
+
+    logger.info("Event: " + str(event))
 
     responseHeaders = {
       "Access-Control-Allow-Methods": "OPTIONS,GET",
@@ -21,14 +27,18 @@ def lambda_handler(event, context):
         'date': str(datetime.datetime.now())
     }
 
+    logger.info("Item: " + str(item))
+
     table = _get_database().Table(os.environ['TABLE'])
 
     res = table.put_item(Item=item)
 
+    logger.info("Respons: " + str(res))
+
     return {
         "headers": responseHeaders,
         "statusCode": 200,
-        "body": res,
+        "body": item,
     }
 
 def _get_database():
