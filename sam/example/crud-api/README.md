@@ -53,3 +53,8 @@ curl -X POST -H "Content-Type: application/json" -d '{"key" : "test-key" , "attr
 ```
 curl http://127.0.0.1:3000/info
 ```
+
+- Delete
+```
+curl -X POST -H "Content-Type: application/json" -d '{"key" : "test-key"}' http://127.0.0.1:3000/info/delete
+```

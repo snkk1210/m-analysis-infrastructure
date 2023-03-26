@@ -50,3 +50,18 @@ Resources:
           Properties:
             Path: /info
             Method: get
+
+  DeleteInfoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: info/delete
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Events:
+        DeleteInfo:
+          Type: Api
+          Properties:
+            Path: /info/delete
+            Method: post
