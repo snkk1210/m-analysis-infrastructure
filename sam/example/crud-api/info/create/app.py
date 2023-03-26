@@ -1,6 +1,7 @@
 import json
 import boto3
 import os
+import datetime
 from boto3.dynamodb.conditions import Key, Attr
 
 def lambda_handler(event, context):
@@ -16,7 +17,8 @@ def lambda_handler(event, context):
     item = {
         'key': req['key'],
         'attr1': req['attr1'],
-        'attr2': req['attr2']
+        'attr2': req['attr2'],
+        'date': str(datetime.datetime.now())
     }
 
     table = _get_database().Table(os.environ['TABLE'])
