@@ -244,6 +244,7 @@ $RECYCLE.BIN/
 # Private
 **/tests/*
 **/.aws-sam/*
+**/view/*
 **/events/event.json
 vars.json
 samconfig.toml
