@@ -6,9 +6,9 @@ from boto3.dynamodb.conditions import Key, Attr
 def lambda_handler(event, context):
 
     responseHeaders = {
-      "Access-Control-Allow-Methods": "OPTIONS,GET,POST",
-      "Access-Control-Allow-Headers" : "*",
-      "Access-Control-Allow-Origin": "*"
+      "Access-Control-Allow-Methods": "OPTIONS,GET",
+      "Access-Control-Allow-Headers" : os.environ['ACAH'],
+      "Access-Control-Allow-Origin": os.environ['ACAO']
     }
 
     req = json.loads(event['body'])

@@ -6,8 +6,8 @@ def lambda_handler(event, context):
 
     responseHeaders = {
       "Access-Control-Allow-Methods": "OPTIONS,GET",
-      "Access-Control-Allow-Headers" : "*",
-      "Access-Control-Allow-Origin": "*"
+      "Access-Control-Allow-Headers" : os.environ['ACAH'],
+      "Access-Control-Allow-Origin": os.environ['ACAO']
     }
 
     table = _get_database().Table(os.environ['TABLE'])

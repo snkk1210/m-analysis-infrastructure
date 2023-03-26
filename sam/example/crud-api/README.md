@@ -7,16 +7,20 @@
 {
     "Parameters": {
       "DYNAMO_ENDPOINT": "http://xxx.xxx.xxx.xxx:8000",
-      "TABLE": "info"
+      "TABLE": "info",
+      "ACAH": "*",
+      "ACAO": "*"
     }
 }
 ```
- - Dynamodb
+ - Dynamodb ( production )
 ```
 {
     "Parameters": {
       "DYNAMO_ENDPOINT": "",
-      "TABLE": "info"
+      "TABLE": "info",
+      "ACAH": "[Allow-Headers]",
+      "ACAO": "[Allow-Origin]"
     }
 }
 ```

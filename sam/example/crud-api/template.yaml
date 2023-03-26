@@ -12,6 +12,8 @@ Globals:
       Variables:
         DYNAMO_ENDPOINT: DYNAMO_ENDPOINT
         TABLE: TABLE
+        ACAH: ACAH
+        ACAO: ACAO
   Api:
     Cors:
       AllowMethods: "'OPTIONS,GET,POST'"
