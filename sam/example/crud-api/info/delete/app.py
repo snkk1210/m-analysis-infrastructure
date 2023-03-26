@@ -25,11 +25,12 @@ def lambda_handler(event, context):
 
     logger.info("Item: " + str(item))
 
-    table = _get_database().Table(os.environ['TABLE'])
-
-    res = table.delete_item(Key=item, ReturnValues='ALL_OLD')
-
-    logger.info("Respons: " + str(res))
+    try:
+        table = _get_database().Table(os.environ['TABLE'])
+        res = table.delete_item(Key=item, ReturnValues='ALL_OLD')
+        logger.info("Respons: " + str(res))
+    except ClientError as e:
+        logger.error("Error: %s", e)
     
     return {
         "headers": responseHeaders,

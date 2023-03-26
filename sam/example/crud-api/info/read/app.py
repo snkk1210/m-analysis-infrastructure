@@ -16,9 +16,11 @@ def lambda_handler(event, context):
       "Access-Control-Allow-Origin": os.environ['ACAO']
     }
 
-    table = _get_database().Table(os.environ['TABLE'])
-
-    res = table.scan()
+    try:
+        table = _get_database().Table(os.environ['TABLE'])
+        res = table.scan()
+    except ClientError as e:
+        logger.error("Error: %s", e)
 
     return {
         "headers": responseHeaders,
