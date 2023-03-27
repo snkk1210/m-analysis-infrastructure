@@ -1,9 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  crud-api
-
-  Sample SAM Template for crud-api
+Description: crud-api
 
 Globals:
   Function:
@@ -69,3 +66,11 @@ Resources:
           Properties:
             Path: /info/delete
             Method: post
+
+  DynamoDBTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: <P_KEY>
+        Type: <TYPE>
+      TableName: <TABLE>
