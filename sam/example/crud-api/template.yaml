@@ -27,6 +27,8 @@ Resources:
       CodeUri: info/create
       Handler: app.lambda_handler
       Runtime: python3.9
+      Policies:
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
       Architectures:
         - x86_64
       Events:
@@ -42,6 +44,8 @@ Resources:
       CodeUri: info/read
       Handler: app.lambda_handler
       Runtime: python3.9
+      Policies:
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
       Architectures:
         - x86_64
       Events:
