@@ -4,6 +4,7 @@ import os
 import logging
 import datetime
 from boto3.dynamodb.conditions import Key, Attr
+from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

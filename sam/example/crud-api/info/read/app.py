@@ -2,6 +2,7 @@ import json
 import boto3
 import os
 import logging
+from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
