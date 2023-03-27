@@ -25,7 +25,7 @@ def lambda_handler(event, context):
         'key': req['key'],
         'attr1': req['attr1'],
         'attr2': req['attr2'],
-        'date': str(datetime.datetime.now())
+        'time': str(datetime.datetime.now())
     }
 
     logger.info("Item: " + str(item))
