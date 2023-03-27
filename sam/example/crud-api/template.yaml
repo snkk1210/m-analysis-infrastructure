@@ -71,6 +71,6 @@ Resources:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
-        Name: <P_KEY>
-        Type: <TYPE>
-      TableName: <TABLE>
+        Name: P_KEY
+        Type: TYPE
+      TableName: TABLE
