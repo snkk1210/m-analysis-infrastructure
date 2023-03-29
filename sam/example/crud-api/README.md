@@ -44,7 +44,11 @@ cp -p template.prod.example.yaml template.yaml
 - Deploy
 ```
 sam build
-sam deploy -g
+sam deploy -g --parameter-overrides \
+    ParameterKey=DYNAMOENDPOINT,ParameterValue="" \
+    ParameterKey=TABLE,ParameterValue="info" \
+    ParameterKey=ACAH,ParameterValue="*" \
+    ParameterKey=ACAO,ParameterValue="*"
 ```
 
 - Delete

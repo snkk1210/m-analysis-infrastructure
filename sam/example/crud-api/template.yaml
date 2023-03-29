@@ -2,30 +2,40 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: crud-api
 
+Parameters:
+  DYNAMOENDPOINT:
+    Type: String
+  TABLE:
+    Type: String
+  ACAH:
+    Type: String
+  ACAO:
+    Type: String
+
 Globals:
   Function:
     Timeout: 3
     Environment:
       Variables:
-        DYNAMO_ENDPOINT: ""
-        TABLE: info
-        ACAH: "*"
-        ACAO: "*"
+        DYNAMO_ENDPOINT: !Ref DYNAMOENDPOINT
+        TABLE: !Ref TABLE
+        ACAH: !Ref ACAH
+        ACAO: !Ref ACAO
   Api:
     Cors:
       AllowMethods: "'OPTIONS,GET,POST'"
       AllowHeaders: "'*'"
       AllowOrigin: "'*'"
-    Auth:
-      ResourcePolicy:
-        CustomStatements:
-        - Effect: Allow
-          Principal: "*"
-          Action: execute-api:Invoke
-          Resource: "*"
-          Condition:
-            IpAddress:
-              aws:SourceIp: "xxx.xxx.xxx.xxx"
+    #Auth:
+    #  ResourcePolicy:
+    #    CustomStatements:
+    #    - Effect: Allow
+    #      Principal: "*"
+    #      Action: execute-api:Invoke
+    #      Resource: "*"
+    #      Condition:
+    #        IpAddress:
+    #          aws:SourceIp: "xxx.xxx.xxx.xxx"
 
 Resources:
   CreateInfoFunction:
@@ -76,11 +86,3 @@ Resources:
           Properties:
             Path: /info/delete
             Method: post
-
-  DynamoDBTable:
-    Type: AWS::Serverless::SimpleTable
-    Properties:
-      PrimaryKey:
-        Name: key
-        Type: String
-      TableName: info
