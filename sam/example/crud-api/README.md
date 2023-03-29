@@ -13,17 +13,6 @@
     }
 }
 ```
- - Dynamodb ( production )
-```
-{
-    "Parameters": {
-      "DYNAMO_ENDPOINT": "",
-      "TABLE": "info",
-      "ACAH": "[Allow-Headers]",
-      "ACAO": "[Allow-Origin]"
-    }
-}
-```
 
 ## Example commands
 
@@ -43,6 +32,11 @@ aws dynamodb create-table --table-name 'info' \
 --key-schema '[{"AttributeName":"key","KeyType": "HASH"}]' \
 --provisioned-throughput '{"ReadCapacityUnits": 5,"WriteCapacityUnits": 5}' \
 --region us-east-1
+```
+
+- Delete DynamoDB table
+```
+aws dynamodb delete-table --table-name 'info' --region us-east-1
 ```
 
 - Start ( local )
@@ -70,10 +64,14 @@ curl -X POST -H "Content-Type: application/json" -d '{"key" : "test-key"}' http:
 
 ## Example Deploy
 
+
+- Deploy
 ```
-sam deploy --parameter-overrides \
-    ParameterKey=DYNAMO_ENDPOINT,ParameterValue="" \
-    ParameterKey=TABLE,ParameterValue="info" \
-    ParameterKey=ACAH,ParameterValue="*" \
-    ParameterKey=ACAO,ParameterValue="*"
+sam build
+sam deploy -g
+```
+
+- Delete
+```
+sam delete
 ```

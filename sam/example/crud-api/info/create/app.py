@@ -40,7 +40,7 @@ def lambda_handler(event, context):
     return {
         "headers": responseHeaders,
         "statusCode": 200,
-        "body": item,
+        "body": str(item),
     }
 
 def _get_database():
