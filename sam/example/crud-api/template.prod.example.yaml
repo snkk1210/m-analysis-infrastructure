@@ -16,6 +16,16 @@ Globals:
       AllowMethods: "'OPTIONS,GET,POST'"
       AllowHeaders: "'*'"
       AllowOrigin: "'*'"
+    Auth:
+      ResourcePolicy:
+        CustomStatements:
+        - Effect: Allow
+          Principal: "*"
+          Action: execute-api:Invoke
+          Resource: "*"
+          Condition:
+            IpAddress:
+              aws:SourceIp: "xxx.xxx.xxx.xxx"
 
 Resources:
   CreateInfoFunction:
