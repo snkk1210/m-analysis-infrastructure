@@ -23,11 +23,6 @@ aws dynamodb create-table --table-name 'info' \
 }
 ```
 
-- Create template
-```
-cp -p template.dev.example.yaml template.yaml
-```
-
 - Start ( local )
 ```
 sam build
@@ -35,11 +30,6 @@ sam local start-api --env-vars vars.json --host 0.0.0.0
 ```
 
 ## Example AWS Deploy
-
-- Create template
-```
-cp -p template.prod.example.yaml template.yaml
-```
 
 - Deploy
 ```
