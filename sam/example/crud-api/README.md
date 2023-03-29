@@ -27,13 +27,22 @@
 
 ## Example commands
 
-- Create DynamoDB table
+- Create DynamoDB table ( local )
 ```
 aws dynamodb create-table --table-name 'info' \
 --attribute-definitions '[{"AttributeName":"key","AttributeType": "S"}]' \
 --key-schema '[{"AttributeName":"key","KeyType": "HASH"}]' \
 --provisioned-throughput '{"ReadCapacityUnits": 5,"WriteCapacityUnits": 5}' \
 --endpoint-url http://localhost:8000
+```
+
+- Create DynamoDB table
+```
+aws dynamodb create-table --table-name 'info' \
+--attribute-definitions '[{"AttributeName":"key","AttributeType": "S"}]' \
+--key-schema '[{"AttributeName":"key","KeyType": "HASH"}]' \
+--provisioned-throughput '{"ReadCapacityUnits": 5,"WriteCapacityUnits": 5}' \
+--region us-east-1
 ```
 
 - Start ( local )
@@ -57,4 +66,14 @@ curl http://127.0.0.1:3000/info
 - Delete
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"key" : "test-key"}' http://127.0.0.1:3000/info/delete
+```
+
+## Example Deploy
+
+```
+sam deploy --parameter-overrides \
+    ParameterKey=DYNAMO_ENDPOINT,ParameterValue="" \
+    ParameterKey=TABLE,ParameterValue="info" \
+    ParameterKey=ACAH,ParameterValue="*" \
+    ParameterKey=ACAO,ParameterValue="*"
 ```

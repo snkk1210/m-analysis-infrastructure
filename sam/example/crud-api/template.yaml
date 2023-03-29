@@ -66,11 +66,3 @@ Resources:
           Properties:
             Path: /info/delete
             Method: post
-
-  DynamoDBTable:
-    Type: AWS::Serverless::SimpleTable
-    Properties:
-      PrimaryKey:
-        Name: P_KEY
-        Type: TYPE
-      TableName: TABLE
