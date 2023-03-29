@@ -16,7 +16,7 @@ SES receipt rule で受信したメールを加工して S3 に格納し、
 ## 何に使うの？
 
 特定の From から届いたメールを一連のパイプライン処理に渡すケースで用いる想定です。  
-SES で受信したメールを S3 に \${From}/\${Subject}/\${Date}/\${DisplayName}[dn]{random_string}.txt のフォーマットでデータを格納するので、\${From} を対象に EventBridge で受信検知 ⇒ Lambda 起動が可能です。  
+SES で受信したメールを S3 に \${From}/\${Subject}/\${Date}/\${DisplayName}[dn]{random_string}.txt のフォーマットで格納するので、\${From} を対象に EventBridge で受信検知 ⇒ Lambda 起動が可能です。  
 
 サンプルで特定の From から届いたメールのみを Slack に通知する機構を用意していますが、他 Lambda 関数を用意すれば、EventBridge からキックが可能です。
 
