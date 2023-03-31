@@ -23,13 +23,19 @@ resource "aws_s3_bucket_lifecycle_configuration" "log" {
     id     = "CloudFront_Log_Expiration"
     status = "Enabled"
 
-    transition {
-      days          = var.cf_log_lifecycle_days_to_glacier
-      storage_class = "GLACIER"
+    dynamic transition {
+      for_each = var.cf_log_lifecycle_days_to_glacier > 0 ? [1] : []
+      content {
+        days          = var.cf_log_lifecycle_days_to_glacier
+        storage_class = "GLACIER"
+      }
     }
 
-    expiration {
-      days = var.cf_log_lifecycle_days_to_expiration
+    dynamic expiration {
+      for_each = var.cf_log_lifecycle_days_to_expiration > 0 ? [1] : []
+      content {
+        days = var.cf_log_lifecycle_days_to_expiration
+      }
     }
   }
 }
