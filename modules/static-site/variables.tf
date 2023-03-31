@@ -39,6 +39,10 @@ variable "custom_error_response_rules" {
   )
 }
 
+variable "enable_basic_auth" {
+  type    = bool
+}
+
 /**
 # NOTE: ClooudFront Cache Policy Variables
 */

@@ -60,9 +60,12 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
     origin_request_policy_id = aws_cloudfront_origin_request_policy.request_policy.id
 
     // CloudFront Functions ( Basic Auth )
-    function_association {
-      event_type   = "viewer-request"
-      function_arn = aws_cloudfront_function.basic_auth.arn
+    dynamic function_association {
+      for_each = var.enable_basic_auth ? [1] : []
+      content {
+        event_type   = "viewer-request"
+        function_arn = aws_cloudfront_function.basic_auth.arn
+      }
     }
   }
 
