@@ -30,10 +30,14 @@ def lambda_handler(event, context):
     date = object_list[2]
     content = read_s3_object(bucket_name, object_key)
 
-    exception_flag = except_handler(m_from)
+    exception_flag = except_mail_handler(m_from)
 
-    #res = notify2slack(m_from, subject, date, content, object_key)
-    #logger.info("Response: " + str(res))
+    if exception_flag:
+        logger.info("This email address is registered -> %s", m_from)
+        exit()
+
+    res = notify2slack(m_from, subject, date, content, object_key)
+    logger.info("Response: " + str(res))
 
 
 def read_s3_object(bucket_name, object_key):
@@ -96,7 +100,7 @@ def notify2slack(m_from, subject, date, content, object_key):
         "attachments": [
             {
                 "color": "#FF0000",
-                "title": "Email has been received.",
+                "title": "Email has been received. ( Not registered )",
                 "text": "<!here> \n *Content* \n ```%s``` \n" % (content),
                 "fields": [
                     {
@@ -168,7 +172,7 @@ def decrypt_hookurl(hookurl):
         return decrypted_hookurl
     
 
-def except_handler(m_from):
+def except_mail_handler(m_from):
     """
 
     Parameters
