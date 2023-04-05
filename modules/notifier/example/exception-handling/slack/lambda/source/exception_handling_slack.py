@@ -174,11 +174,12 @@ def decrypt_hookurl(hookurl):
 
 def except_mail_handler(m_from):
     """
+    Determine if an e-mail address has already been registered in the environment variable.
 
     Parameters
     ----------
     m_from : string
-        From portion of the email
+        From port of the email
 
     Returns
     -------
